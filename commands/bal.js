@@ -7,13 +7,25 @@ module.exports = {
 	description: 'Sends out your balance.',
 	execute(msg, args) {
         const data = JSON.parse(fs.readFileSync("./data.json"));
-        const currency = data[msg.author.id]["currency"]["value"];
 
         let embed = new Discord.MessageEmbed()
-        .setTitle(`${msg.author.username}`)
-        .addField(`${capFirst(botConfig["currency"]["currency-name"])}`, `${currency}`)
-        .addField("Rank", `#${getUserRank(msg.author.id)}`)
-        .setThumbnail(msg.author.displayAvatarURL());
+
+        if(msg.mentions.members.first()){
+            const currency = data[msg.mentions.members.first().id]["currency"]["value"];
+            console.log(msg.mentions.members.first());
+
+            embed.setTitle(`${msg.mentions.members.first().displayName}`)
+            .addField(`${capFirst(botConfig["currency"]["currency-name"])}`, `${currency}`)
+            .addField("Rank", `#${getUserRank(msg.mentions.members.first().id)}`)
+            .setThumbnail(msg.mentions.members.first().user.displayAvatarURL());
+        }
+        else{
+            const currency = data[msg.author.id]["currency"]["value"];
+            embed.setTitle(`${msg.author.username}`)
+            .addField(`${capFirst(botConfig["currency"]["currency-name"])}`, `${currency}`)
+            .addField("Rank", `#${getUserRank(msg.author.id)}`)
+            .setThumbnail(msg.author.displayAvatarURL());
+        }
         msg.channel.send(embed);
 	},
 }

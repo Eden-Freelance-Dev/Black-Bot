@@ -349,7 +349,7 @@ async function podium(sortedData, msg, bet){
 
 	if(winnerList.length > 0){
 		await msg.channel.send(winner);
-		await msg.channel.send(`${bet * (sortedData.length + deadList.length + winnerList.length)}/${winnerList.length} (${award}) ${botConfig["currency"]["currency-name"]} has been added to each of the winners.`);
+		await msg.channel.send(`${bet * (sortedData.length + deadList.length + winnerList.length)} will be split between ${winnerList.length} winner(s). They will get (${award}) ${botConfig["currency"]["currency-name"]} each.`);
 		let data = JSON.parse(fs.readFileSync("./data.json"));
 		//add or subtract currency
 		deadList.forEach(element => {
