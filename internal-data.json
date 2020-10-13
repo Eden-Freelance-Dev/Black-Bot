@@ -1,0 +1,130 @@
+{
+    "last-date": 13,
+    "is-blackjack-runnning": false,
+    "blackjack-deck": [
+        "1♡",
+        "3♧",
+        "4♤",
+        "5♢",
+        "5♡",
+        "5♤",
+        "6♧",
+        "6♤",
+        "7♢",
+        "7♡",
+        "9♢",
+        "9♤",
+        "10♡",
+        "J♢",
+        "Q♢",
+        "Q♡",
+        "K♢",
+        "K♧",
+        "K♤"
+    ],
+    "blackjack-data": [
+        {
+            "ID": "401376663541252096",
+            "deck": [
+                "2♧",
+                "8♢",
+                "8♧",
+                "3♡"
+            ],
+            "stand": true,
+            "dead": false
+        },
+        {
+            "ID": "BOT1",
+            "deck": [
+                "1♧",
+                "1♢",
+                "J♡",
+                "6♡"
+            ],
+            "stand": true,
+            "dead": false
+        },
+        {
+            "ID": "BOT2",
+            "deck": [
+                "4♢",
+                "4♧",
+                "Q♧"
+            ],
+            "stand": true,
+            "dead": false
+        },
+        {
+            "ID": "BOT3",
+            "deck": [
+                "9♡",
+                "3♢",
+                "3♤",
+                "10♧"
+            ],
+            "stand": false,
+            "dead": true
+        },
+        {
+            "ID": "BOT4",
+            "deck": [
+                "2♢",
+                "6♢",
+                "8♡",
+                "J♧"
+            ],
+            "stand": false,
+            "dead": true
+        },
+        {
+            "ID": "BOT5",
+            "deck": [
+                "10♤",
+                "7♧"
+            ],
+            "stand": true,
+            "dead": false
+        },
+        {
+            "ID": "BOT6",
+            "deck": [
+                "Q♤",
+                "2♤",
+                "J♤"
+            ],
+            "stand": false,
+            "dead": true
+        },
+        {
+            "ID": "BOT7",
+            "deck": [
+                "4♡",
+                "9♧",
+                "5♧"
+            ],
+            "stand": true,
+            "dead": false
+        },
+        {
+            "ID": "BOT8",
+            "deck": [
+                "1♤",
+                "10♢",
+                "8♤"
+            ],
+            "stand": true,
+            "dead": false
+        },
+        {
+            "ID": "BOT9",
+            "deck": [
+                "K♡",
+                "2♡",
+                "7♤"
+            ],
+            "stand": true,
+            "dead": false
+        }
+    ]
+}

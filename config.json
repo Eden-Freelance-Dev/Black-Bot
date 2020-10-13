@@ -1,0 +1,46 @@
+{
+    "general": {
+        "prefix": "!",
+        "token": "NzYzMzQ1MDIzNTY2ODcyNTc2.X32Wcw.2XTz1TGBpZzN8qC-FpPedMN1qQA"
+    },
+    "level": {
+        "max-xp-per-day": 100,
+        "xp-cooldown": 10,
+        "min-xp-gained": 2,
+        "max-xp-gained": 4,
+        "percentage-chance": 50
+    },
+    "currency": {
+        "daily-amount": 10,
+        "currency-name": "cookies"
+    },
+    "channels": {
+        "level-up": [
+			"765432028845834280"
+		]
+    },
+    "blackjack": {
+        "min-room-size": 2,
+        "max-room-size": 10,
+        "min-bet": 10,
+        "max-bet": 100000,
+        "join-time": 60000,
+        "turn-time": 30000
+    },
+    "roles": {
+        "level": {
+            "5": [
+                {
+                    "server": "749313192638939297",
+                    "roleID": "764119016071233567"
+                }
+            ],
+            "10": [
+                {
+                    "server": "749313192638939297",
+                    "roleID": "764143370166599712"
+                }
+            ]
+        }
+    }
+}

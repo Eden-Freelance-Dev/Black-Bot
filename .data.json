@@ -1,0 +1,24 @@
+{
+    "401376663541252096": {
+        "name": "Eden",
+        "currency": {
+            "value": 20,
+            "has-collected-daily": true
+        },
+        "level": {
+            "xp": 520,
+            "cooldown": 0
+        }
+    },
+    "686060470376857631": {
+        "name": "Momochi",
+        "currency": {
+            "value": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 10,
+            "cooldown": 0
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "401376663541252096": {
+        "name": "Eden",
+        "currency": {
+            "value": 1000000000900,
+            "hasCollectedDaily": false,
+            "has-collected-daily": true
+        },
+        "level": {
+            "xp": 118,
+            "cooldown": 0
+        }
+    },
+    "219215346337447936": {
+        "name": "Zuxari",
+        "currency": {
+            "value": 96680,
+            "hasCollectedDaily": false,
+            "has-collected-daily": true
+        },
+        "level": {
+            "xp": 39,
+            "cooldown": 0
+        }
+    }
+}
