@@ -12,7 +12,6 @@ module.exports = {
 
         if(msg.mentions.members.first()){
             const currency = data[msg.mentions.members.first().id]["currency"]["value"];
-            console.log(msg.mentions.members.first());
 
             embed.setTitle(`${msg.mentions.members.first().displayName}`)
             .addField(`${capFirst(botConfig["currency"]["currency-name"])}`, `${currency}`)

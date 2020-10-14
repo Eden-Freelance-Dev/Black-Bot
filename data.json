@@ -2,12 +2,36 @@
     "401376663541252096": {
         "name": "Eden",
         "currency": {
-            "value": 990,
-            "hasCollectedDaily": false,
+            "value": 1400,
+            "payday-cooldown": 0,
             "has-collected-daily": true
         },
         "level": {
-            "xp": 0,
+            "xp": 17,
+            "cooldown": 0
+        }
+    },
+    "353519048077737995": {
+        "name": "MrTup",
+        "currency": {
+            "value": 1100,
+            "payday-cooldown": 0,
+            "has-collected-daily": true
+        },
+        "level": {
+            "xp": 16,
+            "cooldown": 0
+        }
+    },
+    "692350627694510161": {
+        "name": "k0010872J",
+        "currency": {
+            "value": 0,
+            "payday-cooldown": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 30,
             "cooldown": 0
         }
     }

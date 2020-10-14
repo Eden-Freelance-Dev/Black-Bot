@@ -14,7 +14,7 @@ module.exports = {
 		const bet = parseInt(args[1]);
 
 		if(isBlackjackRunning){
-			msg.channel.send("There is already a blackjack game in progress! Type !join to join it!");
+			msg.channel.send(`There is already a blackjack game in progress! Type ${botConfig["general"]["prefix"]}join to join it!`);
 			return;
 		}
 
@@ -38,41 +38,50 @@ module.exports = {
 		let users = [];
 		users.push(msg.author.id);
 
-		await msg.channel.send("A blackjack game has begun! Type !join in the next minute to join it! Type !addbot to add a bot, and !forcestart to force start the game!");
+		await msg.channel.send(`A blackjack game has begun! Type ${botConfig["general"]["prefix"]}join in the next minute to join it! Type ${botConfig["general"]["prefix"]}addbot to add a bot, and ${botConfig["general"]["prefix"]}forcestart to force start the game!`);
 		isBlackjackRunning = true;
 		
 		const userFilter = response =>{
-			if("!join" == response.content) return true;
+			if(`${botConfig["general"]["prefix"]}join` == response.content) return true;
 			if(response.author.id != msg.author.id) return false;
-			if("!addbot" == response.content) return true;
-			if("!forcestart" == response.content) return true;
-		}
+			if(`${botConfig["general"]["prefix"]}addbot` == response.content) return true;
+			if(`${botConfig["general"]["prefix"]}forcestart` == response.content) return true;
+			if(`${botConfig["general"]["prefix"]}forceend` == response.content) return true;
+		};
 		const userCollector = await msg.channel.createMessageCollector(userFilter, { max: 1000, time: botConfig["blackjack"]["join-time"]});
 		let collected = 1;
 
 		let bot = 0;
 
-		userCollector.on("collect", async collectedMessage => {
-			if(collectedMessage.content == "!forcestart"){
-				await userCollector.stop();
-				return;
-			}
+		let isForceEnd = false;
 
+		userCollector.on("collect", async collectedMessage => {
+			data = JSON.parse(fs.readFileSync("./data.json"));
+			
 			if(collected >= botConfig["blackjack"]["max-room-size"]){
 				await collectedMessage.channel.send("Room is full!");
 				userCollector.stop();
 				return;
 			}
 
-			if(collectedMessage.content == "!addbot"){
+			if(collectedMessage.content == `${botConfig["general"]["prefix"]}addbot`){
 				bot++;
-				await collectedMessage.channel.send(`Bot${bot} added to game.`);
 				users.push(`BOT${bot}`);
+				await collectedMessage.channel.send(`Bot${bot} added to game.`);
 				collected++;
 				return;
 			}
+			else if(collectedMessage.content == `${botConfig["general"]["prefix"]}forcestart`){
+				await userCollector.stop();
+				return;
+			}
+			else if(collectedMessage.content == `${botConfig["general"]["prefix"]}forceend`){
+				isForceEnd = true;
+				await userCollector.stop();
+				return;
+			}
 
-			const user = data[msg.author.id];
+			const user = data[collectedMessage.author.id];
 
 			if(user["currency"]["value"] < bet){
 				await collectedMessage.channel.send(`Insufficient ${botConfig["currency"]["currency-name"]}.`);
@@ -92,6 +101,11 @@ module.exports = {
 		});
 
 		userCollector.on("end", async (collectedMessages) => {
+			if(isForceEnd){
+				msg.channel.send("Game has been forced to an end. RIP.");
+				isBlackjackRunning = false;
+				return;
+			}
 			//if not enough players
 			if(collected < botConfig["blackjack"]["min-room-size"]){
 				await msg.channel.send(`${botConfig["blackjack"]["min-room-size"] - collected} bot(s) added to game to avoid abuse.`);
@@ -126,26 +140,31 @@ module.exports = {
 			
 			users.forEach(async user =>{
 				let currentUser;
-				internalData["blackjack-data"].forEach(element =>{
-					if(element["ID"] == user){
-						currentUser = element;
+				for(let i = 0; i < internalData["blackjack-data"].length; ++i){
+					if(internalData["blackjack-data"][i]["ID"] == user){
+						currentUser = i;
 					}
-				})
+				}
+
 				for(let i = 0; i < cardsToDraw; ++i){
+					internalData = JSON.parse(fs.readFileSync("./internal-data.json"));
 					let random = Math.floor(Math.random() * internalData["blackjack-deck"].length);
 					//add to bot deck
-					currentUser["deck"].push(internalData["blackjack-deck"][random]);
+					
+					internalData["blackjack-data"][currentUser]["deck"].push(internalData["blackjack-deck"][random]);
 					//remove from public deck
 					internalData["blackjack-deck"].splice(random, 1);
+
+					fs.writeFileSync("./internal-data.json", JSON.stringify(internalData, null, 4));
 				}
 				if(user.substring(0,3) != "BOT"){
 					let embed = new Discord.MessageEmbed()
 					.setTitle("Your current deck")
-					.addField("Deck", getDeckString(currentUser["deck"]))
-					.addField("Total value", getTotal(currentUser["deck"]));
-					await main.bot.users.cache.get(currentUser["ID"]).send(embed)
+					.addField("Deck", getDeckString(internalData["blackjack-data"][currentUser]["deck"]))
+					.addField("Total value", getTotal(internalData["blackjack-data"][currentUser]["deck"]));
+					await main.bot.users.cache.get(internalData["blackjack-data"][currentUser]["ID"]).send(embed)
 					.catch(async err=>{
-						await msg.channel.send(`Unable to DM deck to <@${currentUser["ID"]}>. Please enable your DMs to play this game.`);
+						await msg.channel.send(`Unable to DM deck to <@${internalData["blackjack-data"][currentUser]["ID"]}>. Please enable your DMs to play this game.`);
 					});
 				}
 			});
@@ -157,7 +176,7 @@ module.exports = {
 			while(true){
 				internalData = JSON.parse(fs.readFileSync("./internal-data.json"));
 				if(internalData["blackjack-data"].every(element => { return element["stand"] || element["dead"]; })){
-					await msg.channel.send("Everyone has decided to stand or have died. Now lets sum up the scores.");
+					await msg.channel.send("Everyone has decided to stand or have busted. Now lets sum up the scores.");
 
 					internalData["blackjack-data"].sort((a, b) =>{
 						return getTotal(b["deck"]) - getTotal(a["deck"]);
@@ -217,25 +236,24 @@ async function round(user, msg){
 
 				//check if user has died
 				if(getTotal(currentUser["deck"]) > 21){
-					await msg.channel.send(`${currentUser["ID"]} has died. Their cards added up to ${getTotal(currentUser["deck"])}. R.I.P.`);
+					await msg.channel.send(`${currentUser["ID"]} has busted. Their cards added up to ${getTotal(currentUser["deck"])}. R.I.P.`);
 					currentUser["dead"] = true;
 				}
 			}
 		}
 		else{ //if it is a player's turn
-			await msg.channel.send(`<@${currentUser["ID"]}>, it is your turn. Please type "!h" to hit or "!s" to stand.`);
+			await msg.channel.send(`<@${currentUser["ID"]}>, it is your turn. Please type "${botConfig["general"]["prefix"]}h" to hit or "${botConfig["general"]["prefix"]}s" to stand.`);
 
 			const filter = collectedMessage =>{
 				if(collectedMessage.author != currentUser["ID"]) return false;
-				if(collectedMessage.content == "!s") return true;
-				if(collectedMessage.content == "!h") return true;
+				if(collectedMessage.content == `${botConfig["general"]["prefix"]}s`) return true;
+				if(collectedMessage.content == `${botConfig["general"]["prefix"]}h`) return true;
 				return false;
 			};
 
-			await msg.channel.awaitMessages(filter, { max: 1, time: botConfig["blackjack"]["turn-time"], errors: ["time"]})
-			.then(async collected => {
+			await msg.channel.awaitMessages(filter, { max: 1, time: botConfig["blackjack"]["turn-time"], errors: ["time"]}).then(async collected => {
 				const cmd = collected.first();
-				if(cmd.content == "!h"){
+				if(cmd.content == `${botConfig["general"]["prefix"]}h`){
 					await cmd.channel.send(`<@${currentUser["ID"]}> has decided to hit. Check DMs for your new deck.`);
 
 					let random = Math.round(Math.random() * internalData["blackjack-deck"].length);
@@ -247,9 +265,7 @@ async function round(user, msg){
 					//dm deck to user
 					const user = main.bot.users.cache.get(currentUser["ID"]);
 					let embed = new Discord.MessageEmbed()
-					.setTitle("Your current deck")
-					.addField("Deck", getDeckString(currentUser["deck"]))
-					.addField("Total value", getTotal(currentUser["deck"]));
+					.setTitle("Your current deck").addField("Deck", getDeckString(currentUser["deck"])).addField("Total value", getTotal(currentUser["deck"]));
 					await user.send(embed)
 					.catch(async err=>{
 						await msg.channel.send(`Unable to DM deck to <@${currentUser["ID"]}>. Please enable your DMs to play this game.`);
@@ -257,11 +273,11 @@ async function round(user, msg){
 
 					//check if user has died
 					if(getTotal(currentUser["deck"]) > 21){
-						msg.channel.send(`<@${currentUser["ID"]}> has died. Their cards added up to ${getTotal(currentUser["deck"])}. R.I.P.`);
+						msg.channel.send(`<@${currentUser["ID"]}> has busted. Their cards added up to ${getTotal(currentUser["deck"])}. R.I.P.`);
 						currentUser["dead"] = true;
 					}
 				}
-				else if(cmd.content == "!s"){
+				else if(cmd.content == `${botConfig["general"]["prefix"]}s`){
 					await cmd.channel.send(`<@${currentUser["ID"]}> has decided to stand.`);
 					currentUser["stand"] = true;
 				}
@@ -271,7 +287,7 @@ async function round(user, msg){
 				await msg.channel.send(`Time has ran out. By default, <@${currentUser["ID"]}> will be forced to stand.`);
 				currentUser["stand"] = true;
 				isEndRound = true;
-			})
+			});
 
 			//wait untill round end
 			while(!isEndRound){}
@@ -349,7 +365,7 @@ async function podium(sortedData, msg, bet){
 
 	if(winnerList.length > 0){
 		await msg.channel.send(winner);
-		await msg.channel.send(`${bet * (sortedData.length + deadList.length + winnerList.length)} will be split between ${winnerList.length} winner(s). They will get (${award}) ${botConfig["currency"]["currency-name"]} each.`);
+		await msg.channel.send(`${bet * (sortedData.length + deadList.length + winnerList.length)} ${botConfig["currency"]["currency-name"]} will be split between ${winnerList.length} winner(s). They will get ${award} ${botConfig["currency"]["currency-name"]} each.`);
 		let data = JSON.parse(fs.readFileSync("./data.json"));
 		//add or subtract currency
 		deadList.forEach(element => {
@@ -380,6 +396,9 @@ function getAllCards(){
 	let cards = [];
 	for(let i = 1; i <= 13; i++){
 		let number = `${i}`;
+		if(number == "1"){
+			number = "A";
+		}
 		if(number == "11"){
 			number = "J";
 		}
@@ -413,11 +432,16 @@ function getAllCards(){
 
 function getTotal(deck){
 	let total = 0;
+	let numA = 0;
 	deck.forEach(element => {
 		//if its not a number (J,Q,K)
 		try{
 			if(element.substring(0,2) == "10"){
 				total += 10;
+			}
+			else if(element.substring(0,1) == "A"){
+				total += 1;
+				numA++;
 			}
 			else if(isNaN(element.substring(0,1))){
 				total += 10;
@@ -430,6 +454,21 @@ function getTotal(deck){
 			console.log("Error:", deck, element)
 		}
 	})
+
+	if(total <= 1){
+		if(numA >= 2){
+			total += 20;
+		}
+		else if(numA >= 1){
+			total += 10;
+		}
+	}
+	if(total <= 11){
+		if(numA >= 1){
+			total += 10;
+		}
+	}
+
 	return total;
 }
 

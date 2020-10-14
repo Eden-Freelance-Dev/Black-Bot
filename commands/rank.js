@@ -7,14 +7,25 @@ module.exports = {
     
 	execute(msg, args) {
         const data = JSON.parse(fs.readFileSync("./data.json"));
-        const xp = data[msg.author.id]["level"]["xp"];
+        let embed = new Discord.MessageEmbed();
 
-        let embed = new Discord.MessageEmbed()
-        .setTitle(`${msg.author.username}`)
-        .addField("Level", `${getLevel(xp)}`)
-        .addField("Rank", `#${getUserRank(msg.author.id)}`)
-        .addField("XP", `${xp}/${getXp(getLevel(xp) + 1)} (${getXp(getLevel(xp) + 1) - xp} away from **level ${getLevel(xp) + 1})**`)
-        .setThumbnail(msg.author.displayAvatarURL());
+        if(msg.mentions.members.first()){
+            const xp = data[msg.mentions.members.first().id]["level"]["xp"];
+            embed.setTitle(`${msg.mentions.members.first().displayName}`)
+            .addField("Level", `${getLevel(xp)}`)
+            .addField("Rank", `#${getUserRank(msg.mentions.members.first().id)}`)
+            .addField("XP", `${xp}/${getXp(getLevel(xp) + 1)} (${getXp(getLevel(xp) + 1) - xp} away from **level ${getLevel(xp) + 1})**`)
+            .setThumbnail(msg.mentions.members.first().user.displayAvatarURL());
+        }
+        else{
+            const xp = data[msg.author.id]["level"]["xp"];
+            embed.setTitle(`${msg.author.username}`)
+            .addField("Level", `${getLevel(xp)}`)
+            .addField("Rank", `#${getUserRank(msg.author.id)}`)
+            .addField("XP", `${xp}/${getXp(getLevel(xp) + 1)} (${getXp(getLevel(xp) + 1) - xp} away from **level ${getLevel(xp) + 1})**`)
+            .setThumbnail(msg.author.displayAvatarURL());
+        }
+
         msg.channel.send(embed);
 	},
 }

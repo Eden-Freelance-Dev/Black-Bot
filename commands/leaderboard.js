@@ -12,7 +12,7 @@ module.exports = {
         .setTitle("Leaderboard");
         const users = rank.getSortedUsers();
         for(let i = 0; i < users.length && i < 10; ++i){
-            embed.addField(`Rank ${i + 1}`, `${data[users[i]["ID"]]["name"]}: **level ${rank.getLevel(data[users[i]["ID"]]["level"]["xp"])}**`);
+            embed.addField(`#${i + 1}`, `${data[users[i]["ID"]]["name"]}: **level ${rank.getLevel(data[users[i]["ID"]]["level"]["xp"])}**`);
         }
 
         msg.channel.send(embed);

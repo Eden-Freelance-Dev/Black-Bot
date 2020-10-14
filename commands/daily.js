@@ -15,7 +15,7 @@ module.exports = {
         if(!user["currency"]["has-collected-daily"]){
             user["currency"]["value"] += botConfig["currency"]["daily-amount"];
             user["currency"]["has-collected-daily"] = true;
-            msg.channel.send(`You have successfully collected your daily reward! ${botConfig["currency"]["daily-amount"]} has been added to your balance.`)
+            msg.channel.send(`You have successfully collected your daily reward! ${botConfig["currency"]["daily-amount"]} ${botConfig["currency"]["currency-name"]} has been added to your balance.`);
         }
         else{
             msg.channel.send(`You have already collected your daily reward.`)

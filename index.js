@@ -37,7 +37,7 @@ bot.on('message', async msg=>{
     
 })
 
-bot.on('message', msg => {
+bot.on('message', async msg => {
     if(msg.author.bot) return;
 
     let data = JSON.parse(fs.readFileSync("data.json"));
@@ -47,7 +47,8 @@ bot.on('message', msg => {
             "name": msg.member.displayName,
             "currency": {
                 "value": 0,
-                "hasCollectedDaily": false
+                "payday-cooldown": 0, 
+                "has-collected-daily": false
             },
             "level": {
                 "xp": 0,
@@ -72,20 +73,19 @@ bot.on('message', msg => {
             args[i] = a.join(" ");
         }
     }
-    if (bot.commands.has(args[0])){
-        try {
-            bot.commands.get(args[0]).execute(msg, args);
-        } catch (error) {
-            console.error(error);
-            message.reply(`There was an error trying to execute the ${args[0]} command!`);
+    if(message.substring(0, PREFIX.length) == PREFIX){
+        if (bot.commands.has(args[0])){
+            try {
+                await bot.commands.get(args[0]).execute(msg, args);
+            } catch (error) {
+                console.error(error);
+                await msg.reply(`There was an error trying to execute the ${args[0]} command!`);
+            }
         }
     }
     else{
-        if(message[0] != PREFIX){
-            level.addXp(msg,args);
-        }
+        level.addXp(msg,args);
     }
-    
 });
 
 bot.once('ready', async() => {
@@ -94,8 +94,10 @@ bot.once('ready', async() => {
         let data = JSON.parse(fs.readFileSync("data.json"));
         for(let element in data){
             if(data[element]["level"]["cooldown"] > 0){
-                data[element]["level"]["cooldown"] = 0; //FOR TESTING
-                //data[element]["level"]["cooldown"]--;
+                data[element]["level"]["cooldown"]--;
+            }
+            if(data[element]["currency"]["payday-cooldown"] > 0){
+                data[element]["currency"]["payday-cooldown"]--;
             }
         }
 

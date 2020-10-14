@@ -1,3 +1,4 @@
+const { kMaxLength } = require("buffer");
 const fs = require("fs");
 const botConfig = require("./../config.json");
 
@@ -14,14 +15,19 @@ module.exports = {
             msg.channel.send("Invalid amount.");
             return;
         }
+        if(parseInt(args[1]) < 0){
+            msg.channel.send("Amound must be non negative.");
+            return;
+        } 
         if(parseInt(args[1]) > data[msg.author.id]["currency"]["value"]){
             msg.channel.send(`Not enough ${botConfig["currency"]["currency-name"]}`);
             return;
         }
 
-        data[msg.author.id]["currency"]["value"] -= args[1];
-        data[msg.mentions.members.first().id]["currency"]["value"] += args[1];
+        data[msg.author.id]["currency"]["value"] -= parseInt(args[1]);
+        data[msg.mentions.members.first().id]["currency"]["value"] += parseInt(args[1]);
 
         msg.channel.send(`${args[1]} ${botConfig["currency"]["currency-name"]} has been given to ${msg.mentions.members.first().displayName}.`);
+        fs.writeFileSync("./data.json", JSON.stringify(data, null, 4));
 	},
 }

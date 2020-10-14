@@ -1,100 +1,37 @@
 {
     "general": {
-        "prefix": "!",
-        "token": "NzYzMzQ1MDIzNTY2ODcyNTc2.X32Wcw.2XTz1TGBpZzN8qC-FpPedMN1qQA"
+        "prefix": ".",
+        "token": "NzY1NTEyNjA5Nzk2NTg3NTMw.X4V5LA.Y3nCamQBAzAqpVFAjQ5Gx2LtVrs"
     },
     "level": {
         "max-xp-per-day": 100,
         "xp-cooldown": 10,
-        "min-xp-gained": 2,
-        "max-xp-gained": 4,
+        "min-xp-gained": 10,
+        "max-xp-gained": 20,
         "percentage-chance": 50
     },
     "currency": {
-        "daily-amount": 10,
+        "daily-amount": 1000,
+        "payday-amount": 100,
+        "payday-cooldown": 300,
         "currency-name": "cookies"
     },
     "channels": {
         "level-up": [
-			"765432028845834280"
+			""
 		]
     },
     "blackjack": {
         "min-room-size": 2,
         "max-room-size": 10,
-        "min-bet": 10,
+        "min-bet": 0,
         "max-bet": 100000,
-        "join-time": 60000,
+        "join-time": 600000,
         "turn-time": 30000
     },
     "roles": {
         "level": {
-            "5": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "10": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "20": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "30": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "40": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "50": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "60": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "70": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "80": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "90": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ],
-            "100": [
-                {
-                    "server": "",
-                    "roleID": ""
-                }
-            ]
+            
         }
     }
 }
