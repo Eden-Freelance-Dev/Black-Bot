@@ -1,6 +1,6 @@
 {
     "general": {
-        "prefix": ".",
+        "prefix": "!",
         "token": "NzY1NTEyNjA5Nzk2NTg3NTMw.X4V5LA.Y3nCamQBAzAqpVFAjQ5Gx2LtVrs"
     },
     "level": {
@@ -18,7 +18,7 @@
     },
     "channels": {
         "level-up": [
-			""
+			"759832716966756415"
 		]
     },
     "blackjack": {
@@ -26,7 +26,7 @@
         "max-room-size": 10,
         "min-bet": 0,
         "max-bet": 100000,
-        "join-time": 600000,
+        "join-time": 60000,
         "turn-time": 30000
     },
     "roles": {
