@@ -16,13 +16,6 @@
         "payday-cooldown": 300,
         "currency-name": "cookies"
     },
-    "channels": {
-        "level-up": [
-			"759832716966756415"
-        ],
-        "general": "749313193095987222",
-        "agree-channel": "767017247046631434"
-    },
     "blackjack": {
         "min-room-size": 2,
         "max-room-size": 10,
@@ -31,10 +24,23 @@
         "join-time": 60000,
         "turn-time": 30000
     },
+    "channels": {
+        "level-up": [
+			"759832716966756415"
+        ],
+        "general": "749313193095987222",
+        "agree-channel": "767017247046631434"
+    },
+    "categories":{
+        "ticket": "767038858923212822"
+    },
     "roles": {
         "level": {
             
         },
-        "join-role": "764143370166599712" 
+        "join-role": "764143370166599712" ,
+        "mods": [
+            "767039521602404374"
+        ]
     }
 }

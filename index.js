@@ -79,7 +79,7 @@ bot.once("ready", async() => {
     console.log("Ready!");
     setInterval(()=>{
         //cooldown for xp
-        let data = JSON.parse(fs.readFileSync("data.json"));
+        let data = JSON.parse(fs.readFileSync("./data.json"));
         for(let element in data){
             if(data[element]["level"]["cooldown"] > 0){
                 data[element]["level"]["cooldown"]--;
@@ -89,8 +89,8 @@ bot.once("ready", async() => {
             }
         }
 
-        let internalData = JSON.parse(fs.readFileSync("internal-data.json"));
         //update daily reward
+        let internalData = JSON.parse(fs.readFileSync("./internal-data.json"));
         let today = new Date();
         let date = today.getDate();
         if(date != internalData["last-date"]){
@@ -98,10 +98,10 @@ bot.once("ready", async() => {
                 data[element]["currency"]["has-collected-daily"] = false;
             }
             internalData["last-date"] = date;
+            fs.writeFileSync("./internal-data.json", JSON.stringify(internalData, null, 4));
         }
         
-        fs.writeFileSync("internal-data.json", JSON.stringify(internalData, null, 4));
-        fs.writeFileSync("data.json", JSON.stringify(data, null, 4))
+        fs.writeFileSync("./data.json", JSON.stringify(data, null, 4))
     }, 1000);
 });
 

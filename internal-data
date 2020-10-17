@@ -3,5 +3,7 @@
     "is-blackjack-runnning": false,
     "blackjack-deck": [],
     "blackjack-data": [],
-    "ticket-data": {}
+    "ticket-data": {
+        "401376663541252096": "767025949665001531"
+    }
 }
