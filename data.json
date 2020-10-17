@@ -1,3 +1,38 @@
 {
-    
+    "401376663541252096": {
+        "name": "Eden",
+        "currency": {
+            "value": 0,
+            "payday-cooldown": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 33,
+            "cooldown": 0
+        }
+    },
+    "686060470376857631": {
+        "name": "Momochi",
+        "currency": {
+            "value": 0,
+            "payday-cooldown": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 41,
+            "cooldown": 0
+        }
+    },
+    "219215346337447936": {
+        "name": "Zuxari",
+        "currency": {
+            "value": 0,
+            "payday-cooldown": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 18,
+            "cooldown": 0
+        }
+    }
 }

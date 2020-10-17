@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const botConfig = JSON.parse(fs.readFileSync("./config.json"));
-const main = require("./../index.js");
+const index = require("./../index.js");
 let isBlackjackRunning = false;
 
 module.exports = {
@@ -162,7 +162,7 @@ module.exports = {
 					.setTitle("Your current deck")
 					.addField("Deck", getDeckString(internalData["blackjack-data"][currentUser]["deck"]))
 					.addField("Total value", getTotal(internalData["blackjack-data"][currentUser]["deck"]));
-					await main.bot.users.cache.get(internalData["blackjack-data"][currentUser]["ID"]).send(embed)
+					await index.bot.users.cache.get(internalData["blackjack-data"][currentUser]["ID"]).send(embed)
 					.catch(async err=>{
 						await msg.channel.send(`Unable to DM deck to <@${internalData["blackjack-data"][currentUser]["ID"]}>. Please enable your DMs to play this game.`);
 					});
@@ -263,7 +263,7 @@ async function round(user, msg){
 					internalData["blackjack-deck"].splice(random, 1);
 
 					//dm deck to user
-					const user = main.bot.users.cache.get(currentUser["ID"]);
+					const user = index.bot.users.cache.get(currentUser["ID"]);
 					let embed = new Discord.MessageEmbed()
 					.setTitle("Your current deck").addField("Deck", getDeckString(currentUser["deck"])).addField("Total value", getTotal(currentUser["deck"]));
 					await user.send(embed)

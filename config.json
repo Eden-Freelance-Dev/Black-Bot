@@ -19,7 +19,9 @@
     "channels": {
         "level-up": [
 			"759832716966756415"
-		]
+        ],
+        "general": "749313193095987222",
+        "agree-channel": "767017247046631434"
     },
     "blackjack": {
         "min-room-size": 2,
@@ -32,6 +34,7 @@
     "roles": {
         "level": {
             
-        }
+        },
+        "join-role": "764143370166599712" 
     }
 }

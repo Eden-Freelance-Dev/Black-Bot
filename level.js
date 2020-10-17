@@ -1,5 +1,5 @@
 const fs = require("fs");
-const main = require("./index.js");
+const index = require("./index.js");
 
 const botConifg = JSON.parse(fs.readFileSync("./config.json"));
 
@@ -39,7 +39,7 @@ module.exports.addXp = function addXp(msg, args){
             // if we have specified a channel for the level up messages
             const channels = botConifg["channels"]["level-up"];
             for(let i = 0; i < channels.length; ++i){
-                const channel = main.bot.channels.cache.get(channels[i]);
+                const channel = index.bot.channels.cache.get(channels[i]);
                 channel.send(`${msg.author.username} has leveled up to **level ${getLevel(data[msg.author.id]["level"]["xp"])}**!`);
             }
         }
@@ -59,7 +59,7 @@ function getLevel(xp){
 
 function addRole(server, memberID, role){
     if(!server || !memberID || !role) return;
-    const guild = main.bot.guilds.cache.get(server);
+    const guild = index.bot.guilds.cache.get(server);
     guild.members.fetch(memberID).then((member) => {
         member.roles.add(role);
     });
@@ -67,7 +67,7 @@ function addRole(server, memberID, role){
 
 function removeRole(server, memberID, role){
     if(!server || !memberID || !role) return;
-    const guild = main.bot.guilds.cache.get(server);
+    const guild = index.bot.guilds.cache.get(server);
     guild.members.fetch(memberID).then((member) => {
         member.roles.remove(role);
     });
