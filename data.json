@@ -7,7 +7,31 @@
             "has-collected-daily": false
         },
         "level": {
-            "xp": 18,
+            "xp": 10000271,
+            "cooldown": 0
+        }
+    },
+    "219215346337447936": {
+        "name": "Zuxari",
+        "currency": {
+            "value": 0,
+            "payday-cooldown": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 100,
+            "cooldown": 0
+        }
+    },
+    "609520519045185542": {
+        "name": "Pludgy",
+        "currency": {
+            "value": 1000,
+            "payday-cooldown": 0,
+            "has-collected-daily": true
+        },
+        "level": {
+            "xp": 145,
             "cooldown": 0
         }
     }

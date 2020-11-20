@@ -31,7 +31,7 @@ module.exports = {
 }
 
 function getLevel(xp){
-    for(let i = 100; i >= 0 ; --i){
+    for(let i = 1000; i >= 0 ; --i){
         if(xp >= 5 * (Math.pow(i, 2)) + 50 * i + 100){
             return i;
         }

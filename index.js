@@ -119,8 +119,6 @@ bot.on("guildMemberAdd", async member => {
     .catch(error => {
         console.log(error);
     });
-    let internalData = JSON.parse(fs.readFileSync("internal-data.json"));
-    internalData["newcomers"][member.id] = false;
 
     const channel = await bot.channels.cache.get(botConfig["channels"]["agree-channel"]);
     await channel.send(`<@${member.id}>, welcome to the server! Please type "${PREFIX}agree" to agree to the rules and gaining access to the rest of the server! `);
