@@ -2,12 +2,12 @@
     "401376663541252096": {
         "name": "Eden",
         "currency": {
-            "value": 0,
+            "value": 800,
             "payday-cooldown": 0,
             "has-collected-daily": false
         },
         "level": {
-            "xp": 10000271,
+            "xp": 10000447,
             "cooldown": 0
         }
     },
@@ -28,10 +28,22 @@
         "currency": {
             "value": 1000,
             "payday-cooldown": 0,
-            "has-collected-daily": true
+            "has-collected-daily": false
         },
         "level": {
             "xp": 145,
+            "cooldown": 0
+        }
+    },
+    "174243466161684481": {
+        "name": "UncleAdamGaming",
+        "currency": {
+            "value": 1100,
+            "payday-cooldown": 0,
+            "has-collected-daily": false
+        },
+        "level": {
+            "xp": 154,
             "cooldown": 0
         }
     }
