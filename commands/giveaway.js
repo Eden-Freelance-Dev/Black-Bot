@@ -1,11 +1,13 @@
 let recentGiveaways = [];
+const { kMaxLength } = require("buffer");
 const fs = require("fs");
 const botConfig = JSON.parse(fs.readFileSync("config.json"));
 
 module.exports = {
     name: 'giveaway',
 	async execute(msg, args) {
-		
+		if(!msg.member.roles.cache.some(r => botConfig["roles"]["giveaway-requirement"].includes(r.id))) return msg.channel.send("You don't have permission to use this command!");
+
 		let links = JSON.parse(fs.readFileSync("nitro-links.json"));
 		if(links.length <= 0) return msg.channel.send("There is no prize to be given at the moment.");
 		if(recentGiveaways.includes(msg.author.id)) return msg.channel.send("Please wait 24 hours before you use this command again.");
